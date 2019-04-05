@@ -22,7 +22,7 @@ public class T07_ListSortTest {
 		}
 		System.out.println("==============================================");
 
-		Collections.sort(list);
+		Collections.sort(list);	// 내부정렬
 
 		System.out.println("이름의 오름차순으로 정렬 후");
 		for (Member mem : list) {
