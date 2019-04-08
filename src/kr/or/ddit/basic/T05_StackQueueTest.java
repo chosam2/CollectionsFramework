@@ -58,7 +58,7 @@ public class T05_StackQueueTest {
 		System.out.println("꺼내온 자료 : " + queue.poll());
 		System.out.println("현재 queue의 값" + queue);
 
-		if (queue.offer("성춘향")) {	// return값이 boolean
+		if (queue.offer("성춘향")) { // return값이 boolean
 			System.out.println("신규 등록 자료 : 성춘향");
 		}
 		System.out.println("현재 queue의 값 : " + queue);
