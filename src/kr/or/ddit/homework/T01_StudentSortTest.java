@@ -17,12 +17,10 @@ import java.util.List;
 //(학번 정렬기준은 Student클래스 자체에서 제공하도록 하고,
 // 총점 정렬기준은 외부클래스에서 제공하도록 한다.)
 
-public class T01_ListSortTest {
+public class T01_StudentSortTest {
 	public static void main(String[] args) {
 
 		List<Student> list = new ArrayList<>();
-
-		List<Integer> rank = new ArrayList<>();
 
 		list.add(new Student(13, "유형욱", 90, 80, 100));
 		list.add(new Student(26, "김민현", 90, 90, 90));
