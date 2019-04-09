@@ -26,14 +26,22 @@ public class T12_Equals_hashCodeTest {
 				간주될 수 없다.
 			
 		- hashCode() 메서드에서 사용하는 '해싱 알고리즘'에서 서로 다른 객체에 대하여 같은 hashCode값을 
-				만들어 낼 수 있다. 그래서 객체가 같지 않더라도 hashCode가 같을 수 있다.
+				만들어 낼 수 있다. 그래서 객체가 같지 않더라도 hashCode가 같을 수 있다.	--> 해쉬의 충돌성때문에 중복되는게 나타날 수도있다.
 	 */
 	public static void main(String[] args) {
+		
+		
+//		System.out.println(new String("123").equals(new String("123"))); // true(내용비교. String 비교)
+//		System.out.println(new String("123") == (new String("123"))); // false(객체비교. HashCode비교)
+		
 		Person p1 = new Person(1, "홍길동");
+//		System.out.println(p1.getClass());
 		Person p2 = new Person(1, "홍길동");
+//		System.out.println(p2.getClass());
 
-		System.out.println(p1.equals(p2));
-		System.out.println(p1 == p2);
+		
+		System.out.println("p1.equals(p2) : " + p1.equals(p2));
+		System.out.println("p1 == p2 : " + (p1 == p2));
 
 		Set<Person> hset = new HashSet<>();
 		hset.add(p1);
@@ -72,6 +80,11 @@ public class T12_Equals_hashCodeTest {
 	}
 }
 
+/**
+ * 나만의 class를 만들때는 equals를 재정의 해주는것이 좋다.
+ * @author Hyungwook
+ *
+ */
 class Person {
 
 	private int id;
@@ -99,6 +112,7 @@ class Person {
 		this.name = name;
 	}
 
+	// hashCode의 판단요건은 중복이 없어야한다.
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,15 +124,25 @@ class Person {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		
+		if (this == obj)	// 나랑 나를 비교하는 것
 			return true;
+		
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		
+		if (this.getClass() != obj.getClass())
 			return false;
+		
 		Person other = (Person) obj;
+		
+		System.out.println("현재객체이름 : " + this.getName());
+		System.out.println("비교대상객체이름 : " + other.getName());
+		
+		
 		if (id != other.id)
 			return false;
+		
 		if (name == null) {
 			if (other.name != null)
 				return false;

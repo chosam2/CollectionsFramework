@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-public class T13_LottoProgram {
+public class Z13_LottoProgram {
 	int[] lottoNum = new int[6];
 	int[][] userNum;
 	int attempt;
@@ -16,10 +16,13 @@ public class T13_LottoProgram {
 	Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		T13_LottoProgram lotto = new T13_LottoProgram();
+		Z13_LottoProgram lotto = new Z13_LottoProgram();
 		lotto.lottoStart();
 	}
 
+	/**
+	 * 게임 스타트
+	 */
 	private void lottoStart() {
 
 		while (true) {
@@ -44,8 +47,11 @@ public class T13_LottoProgram {
 
 	}
 
+	/**
+	 * 난수 1 ~ 45 생성
+	 */
 	private void getRndNum() {
-		insertCoit();
+		insertCoin();
 
 		Set<Integer> ltNumSet = new HashSet<Integer>();
 
@@ -60,22 +66,26 @@ public class T13_LottoProgram {
 		//		while(it.hasNext()) {
 		//			lottoNum[i++] = it.next().intValue();	 // 난수로 생성된 로또번호 6개 배열에 추가.
 		//		}
-
+		//
 		List<Integer> ltNumList = new ArrayList<>(ltNumSet);
 		Collections.shuffle(ltNumList);
 		int i = 0;
 		for (int ltNum : ltNumList) {
 			lottoNum[i++] = ltNum;
 		}
+		
 
 		selectNum();
 	}
 
+	/**
+	 * 로또번호 1 ~ 45 입력받기
+	 */
 	private void selectNum() {
 		userNum = new int[attempt][6];
 		System.out.println("중복되지 않는 정수 6개 고르세요");
 		for (int k = 0; k < userNum.length; k++) {
-			System.out.print(k + 1 + " 회차 입력 가즈아!");
+			System.out.println(k + 1 + " 회차 입력 가즈아!");
 			for (int i = 0; i < userNum[k].length; i++) {
 				System.out.print(k + 1 + "회차" + (i + 1) + " 번째 숫자 : ");
 				userNum[k][i] = Integer.parseInt(sc.nextLine().trim());
@@ -96,7 +106,10 @@ public class T13_LottoProgram {
 		}
 	}
 
-	private void insertCoit() {
+	/**
+	 * 입금 메서드
+	 */
+	private void insertCoin() {
 		int price = 0;
 		attempt = 0;
 		int remainder = 0;
