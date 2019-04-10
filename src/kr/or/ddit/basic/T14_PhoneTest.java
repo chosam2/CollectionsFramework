@@ -1,9 +1,11 @@
 package kr.or.ddit.basic;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 public class T14_PhoneTest {
 	Scanner sc = new Scanner(System.in);
@@ -48,7 +50,7 @@ public class T14_PhoneTest {
 				phoneSearch();
 				break;
 			case 5:
-				phoneSearch();
+				phoneShowAll();
 				break;
 			case 0:
 				System.exit(0);
@@ -56,19 +58,59 @@ public class T14_PhoneTest {
 		}
 	}
 
+	private void phoneShowAll() {
+		Set<Map.Entry<String, Phone>> mapSet = map.entrySet();
+
+		Iterator<Map.Entry<String, Phone>> entryIt = mapSet.iterator();
+
+		while (entryIt.hasNext()) {
+			Map.Entry<String, Phone> entry = entryIt.next();
+
+			System.out.println(entry.getKey() + " : " + entry.getValue());
+		}
+	}
+
+	/**
+	 * Iterator을 이용한 리스트 조회
+	 */
 	private void phoneSearch() {
-		// TODO Auto-generated method stub
+		System.out.println(map);
+		System.out.println("검색할 이름을 입력하세요.");
+		String name = sc.nextLine().trim();
+
+		Set<String> keySet = map.keySet();
+
+		Iterator<String> it = keySet.iterator();
+		while (it.hasNext()) {
+			String key = it.next();
+			if (key.equals(name)) {
+				System.out.println(key + " : " + map.get(key));
+			}
+		}
 
 	}
 
 	private void phoneDelete() {
 		System.out.println("삭제할 이름을 입력하세요.");
 		String name = sc.nextLine();
-		System.out.println(map);
+
+		Set<String> keySet = map.keySet();
+		for(String key : keySet) {
+			if(name.equals(key)) {
+				map.remove(key);
+			}
+		}
 	}
 
 	private void phoneModify() {
-		// TODO Auto-generated method stub
+		System.out.println("수정할 이름을 입력하세요.");
+		String name = sc.nextLine();
+
+		System.out.print("번호 >> ");
+		String tel = sc.nextLine().trim();
+		System.out.print("주소 >> ");
+		String addr = sc.nextLine().trim();
+		map.put(name, new Phone(name, tel, addr));
 
 	}
 
@@ -83,21 +125,24 @@ public class T14_PhoneTest {
 		String addr = sc.nextLine().trim();
 
 		map.put(name, new Phone(name, tel, addr));
-		System.out.println(map);
 
 	}
 }
 
 class Phone {
 
-	private int num = 0;
+	private static int count = 0;
+	private int num;
 	private String name;
 	private String tel;
 	private String addr;
 
+	{
+		++count;
+		num = count;
+	}
+
 	public Phone(String name, String tel, String addr) {
-		super();
-		this.num++;
 		this.name = name;
 		this.tel = tel;
 		this.addr = addr;
@@ -137,7 +182,7 @@ class Phone {
 
 	@Override
 	public String toString() {
-		return "Phone [번호=" + num + ", 이름=" + name + ", 연락처=" + tel + ", 주소=" + addr + "]";
+		return "번호=" + num + ", 이름=" + name + ", 연락처=" + tel + ", 주소=" + addr;
 	}
 
 }
