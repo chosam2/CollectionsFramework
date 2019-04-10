@@ -135,7 +135,7 @@ public class T14_PhoneBookTest {
 		while (it.hasNext()) {
 			String key = it.next();
 			if (key.equals(name)) {
-				System.out.println(key + " : " + map.get(name));
+				System.out.println(key + " : " + map.get(key));
 			}
 		}
 
