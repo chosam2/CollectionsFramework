@@ -29,47 +29,61 @@ public class T12_Equals_hashCodeTest {
 				만들어 낼 수 있다. 그래서 객체가 같지 않더라도 hashCode가 같을 수 있다.	--> 해쉬의 충돌성때문에 중복되는게 나타날 수도있다.
 	 */
 	public static void main(String[] args) {
-		
-		
-//		System.out.println(new String("123").equals(new String("123"))); // true(내용비교. String 비교)
-//		System.out.println(new String("123") == (new String("123"))); // false(객체비교. HashCode비교)
-		
-		Person p1 = new Person(1, "홍길동");
-//		System.out.println(p1.getClass());
-		Person p2 = new Person(1, "홍길동");
-//		System.out.println(p2.getClass());
 
-		
+		//		System.out.println(new String("123").equals(new String("123"))); // true(내용비교. String 비교)
+		//		System.out.println(new String("123") == (new String("123"))); // false(객체비교. HashCode비교)
+
+		Person p1 = new Person(1, "홍길동");
+		//				System.out.println(p1.getClass());
+		Person p2 = new Person(1, "홍길동");
+		//				System.out.println(p2.getClass());
+//		Person p3 = new Person(2, "누구게"); /*=> p1, p2가 같다고 인식해서 hset.size가 안늘어남. 그거 확인하기위해 사용*/
+
+		System.out.println("=============================================");
+		System.out.println("기존 p1 hashCode : " + p1.hashCode());
+		System.out.println("기존 p2 hashCode : " + p2.hashCode());
+
 		System.out.println("p1.equals(p2) : " + p1.equals(p2));
 		System.out.println("p1 == p2 : " + (p1 == p2));
 
+		System.out.println("=============================================");
+
 		Set<Person> hset = new HashSet<>();
-		hset.add(p1);
-		hset.add(p2);
+							
+		hset.add(p1);	// hset.add할때 hashCode 실행되는데 어디서 되는건가?
+		hset.add(p2);	// add 메서드 실행될 때 내부적으로 같은게 있으면 equals체크 => add가 안됨.
+//		hset.add(p3);
 		System.out.println("개수1 : " + hset.size());
 		System.out.println();
-		System.out.println("변경 전 데이터");
-		for (Person p : hset) {
-			System.out.println(p.getId() + " : " + p.getName() + " : " + p.hashCode());
-		}
-
-		System.out.println();
-		p1.setName("일지매"); // 추가된 후에 데이터가 변경되어도 Set의 데이터는 변하지 않는다.
-							// (이름이 변경되기 전 후의 hashCode()값이 서로 상이하기 때문...)
-		System.out.println("변경 후 데이터");
-		for (Person p : hset) {
+		System.out.println("#변경 전 데이터(홍길동일때 hashCode)" + p1.hashCode() );
+		
+		
+		for (Person p : hset) {	// hset.size가 1개이니깐 한번만 반복!
 			System.out.println(p.equals(p1));
 			System.out.println(p.getId() + " : " + p.getName() + " : " + p.hashCode());
 		}
-
+		
 		System.out.println();
+		p1.setName("일지매"); // 추가된 후에 데이터가 변경되어도 Set의 데이터는 변하지 않는다.
+							// (이름이 변경되기 전 후의 hashCode()값이 서로 상이하기 때문...)
+		System.out.println("#변경 후 데이터(일지매일때 hashCode)" + p1.hashCode());
+		for (Person p : hset) {	// 아직 Set에 바뀐 p1객체를 담지않음.
+			System.out.println(p.equals(p1));
+			System.out.println(p.getId() + " : " + p.getName() + " : " + p.hashCode());
+		}
+		System.out.println("=============================================");
+
+		System.out.println("???");
 		System.out.println(hset.add(p1));
 		System.out.println("hset.add(p1) 후 사이즈 " + hset.size());
 
 		for (Person p : hset) {
 			System.out.println(p.getId() + " : " + p.getName() + " : " + p.hashCode());
 		}
+		
+		System.out.println("=============================================");
 
+		System.out.println("삭제 가즈아");
 		System.out.println(hset.remove(p2));
 		System.out.println("hset.remove(p2) 후 사이즈 : " + hset.size());
 
@@ -119,30 +133,30 @@ class Person {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+//		System.out.println("해쉬코드 실행 어디서??");
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		
-		if (this == obj)	// 나랑 나를 비교하는 것
+
+		if (this == obj) // 나랑 나를 비교하는 것
 			return true;
-		
+
 		if (obj == null)
 			return false;
-		
+
 		if (this.getClass() != obj.getClass())
 			return false;
-		
+
 		Person other = (Person) obj;
-		
+
 		System.out.println("현재객체이름 : " + this.getName());
 		System.out.println("비교대상객체이름 : " + other.getName());
-		
-		
+
 		if (id != other.id)
 			return false;
-		
+
 		if (name == null) {
 			if (other.name != null)
 				return false;

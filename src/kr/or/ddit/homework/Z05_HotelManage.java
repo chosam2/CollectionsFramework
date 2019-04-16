@@ -12,7 +12,6 @@ public class Z05_HotelManage {
 	Map<Integer, Hotel> map;
 
 	public Z05_HotelManage() {
-		sc = new Scanner(System.in);
 		map = new HashMap<>();
 	}
 
@@ -46,6 +45,7 @@ public class Z05_HotelManage {
 				roomStatus();
 				break;
 			case 4:
+				System.out.println("호텔 문닫습니다.");
 				System.exit(0);
 			default:
 				System.out.println("잘못 눌렀습니다.");
